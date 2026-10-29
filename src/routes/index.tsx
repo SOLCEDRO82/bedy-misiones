@@ -5,6 +5,7 @@ import hero from "@/assets/hero.jpg";
 import { Logo } from "@/components/bedy/Logo";
 import { SearchPanel } from "@/components/bedy/SearchPanel";
 import { StayCarousel } from "@/components/bedy/StayCarousel";
+import { Attractions } from "@/components/bedy/Attractions";
 import { featured, formatARS, newest, offers, type Stay } from "@/data/stays";
 
 export const Route = createFileRoute("/")({
@@ -25,6 +26,7 @@ function Index() {
   const [dark, setDark] = useState(false);
   const [menu, setMenu] = useState(false);
   const [selected, setSelected] = useState<Stay | null>(null);
+  const [zone, setZone] = useState("");
   useEffect(() => { document.documentElement.classList.toggle("dark", dark); }, [dark]);
 
   return (
@@ -62,7 +64,7 @@ function Index() {
             <h1 className="mt-2 font-display text-4xl font-semibold leading-tight md:text-5xl">Dormí como en casa,<br />en el corazón de la tierra colorada.</h1>
             <p className="mt-3 max-w-md opacity-90">Elegí tus camas, no solo la cantidad de personas.</p>
           </div>
-          <SearchPanel />
+          <SearchPanel zone={zone} onZoneChange={setZone} />
         </div>
       </section>
 
@@ -79,6 +81,13 @@ function Index() {
           <button className="mt-4 rounded-xl bg-card px-5 py-3 font-bold text-primary md:mt-0">Publicar ahora</button>
         </div>
       </section>
+
+      <Attractions
+        onPick={(z) => {
+          setZone(z);
+          document.getElementById("buscador")?.scrollIntoView({ behavior: "smooth" });
+        }}
+      />
 
       {selected && (
         <div className="fixed inset-0 z-50 flex items-end justify-center bg-overlay/50 sm:items-center" onClick={() => setSelected(null)}>
