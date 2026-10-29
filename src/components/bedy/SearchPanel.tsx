@@ -23,8 +23,7 @@ function Counter({ icon: Icon, label, value, onChange }: { icon: typeof BedDoubl
   );
 }
 
-export function SearchPanel() {
-  const [zone, setZone] = useState("");
+export function SearchPanel({ zone, onZoneChange: setZone }: { zone: string; onZoneChange: (z: string) => void }) {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [dbl, setDbl] = useState(1);
@@ -32,7 +31,7 @@ export function SearchPanel() {
   const field = "w-full rounded-xl border-2 border-input bg-card py-2.5 text-sm text-foreground outline-none focus:border-primary";
 
   return (
-    <form onSubmit={(e) => e.preventDefault()} className="space-y-4 rounded-3xl bg-card/95 p-5 shadow-elegant backdrop-blur">
+    <form id="buscador" onSubmit={(e) => e.preventDefault()} className="scroll-mt-24 space-y-4 rounded-3xl bg-card/95 p-5 shadow-elegant backdrop-blur">
       <div>
         <Label a="Indicá el" b="destino" />
         <div className="relative">
