@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { capacity } from "@/data/stays";
 import { BedDouble, BedSingle, Heart, MapPin, Star } from "lucide-react";
 import { formatARS, type Stay } from "@/data/stays";
 
