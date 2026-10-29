@@ -1,7 +1,4 @@
 # bedy
-
-vamos a crear un nuevo preoyecto: bedy
-
 This project was built with [Lovable](https://lovable.dev).
 
 **Live app**: https://bedy-misiones.lovable.app
