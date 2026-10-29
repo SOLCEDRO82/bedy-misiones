@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { BedDouble, BedSingle, CalendarDays, MapPin, Minus, Plus, Search } from "lucide-react";
 import { zones } from "@/data/stays";
+import { differenceInCalendarDays, format } from "date-fns";
+import { es } from "date-fns/locale";
+import type { DateRange } from "react-day-picker";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 function Label({ a, b }: { a: string; b: string }) {
   return (
@@ -24,8 +29,10 @@ function Counter({ icon: Icon, label, value, onChange }: { icon: typeof BedDoubl
 }
 
 export function SearchPanel({ zone, onZoneChange: setZone }: { zone: string; onZoneChange: (z: string) => void }) {
-  const [checkIn, setCheckIn] = useState("");
-  const [checkOut, setCheckOut] = useState("");
+  const [range, setRange] = useState<DateRange | undefined>();
+  const [open, setOpen] = useState(false);
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const nights = range?.from && range?.to ? differenceInCalendarDays(range.to, range.from) : 0;
   const [dbl, setDbl] = useState(1);
   const [sgl, setSgl] = useState(0);
   const field = "w-full rounded-xl border-2 border-input bg-card py-2.5 text-sm text-foreground outline-none focus:border-primary";
@@ -42,15 +49,36 @@ export function SearchPanel({ zone, onZoneChange: setZone }: { zone: string; onZ
       </div>
       <div>
         <Label a="Seleccioná las" b="fechas" />
-        <div className="grid grid-cols-2 gap-3">
-          {[["Check-in", checkIn, setCheckIn], ["Check-out", checkOut, setCheckOut]].map(([l, v, set]) => (
-            <label key={l as string} className="relative block">
-              <span className="sr-only">{l as string}</span>
-              <CalendarDays className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-primary" />
-              <input type="date" value={v as string} onChange={(e) => (set as (s: string) => void)(e.target.value)} className={`${field} pl-10 pr-2`} />
-            </label>
-          ))}
-        </div>
+        <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild>
+            <button type="button" className={`${field} grid grid-cols-2 text-left`}>
+              {(["Entrada", "Salida"] as const).map((l, i) => {
+                const d = i === 0 ? range?.from : range?.to;
+                return (
+                  <span key={l} className={`flex items-center gap-2 px-3 ${i ? "border-l-2 border-input" : ""}`}>
+                    <CalendarDays className="h-5 w-5 shrink-0 text-primary" />
+                    <span className="min-w-0">
+                      <span className="block text-[11px] font-semibold uppercase text-muted-foreground">{l}</span>
+                      <span className={`block truncate font-semibold ${d ? "" : "text-muted-foreground"}`}>{d ? format(d, "EEE d MMM", { locale: es }) : "Elegir"}</span>
+                    </span>
+                  </span>
+                );
+              })}
+            </button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0" align="start">
+            <Calendar
+              mode="range"
+              locale={es}
+              selected={range}
+              onSelect={(r) => { setRange(r); if (r?.from && r?.to && r.from.getTime() !== r.to.getTime()) setOpen(false); }}
+              disabled={{ before: today }}
+              numberOfMonths={1}
+              className="p-3 pointer-events-auto"
+            />
+          </PopoverContent>
+        </Popover>
+        {nights > 0 && <p className="mt-2 text-sm font-semibold text-primary">{nights} {nights === 1 ? "noche" : "noches"}</p>}
       </div>
       <div>
         <Label a="Cantidad de" b="camas" />
