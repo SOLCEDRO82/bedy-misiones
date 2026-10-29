@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { BedDouble, BedSingle, CalendarDays, MapPin, Minus, Plus, Search } from "lucide-react";
-import { zones } from "@/data/stays";
+import { bedsLabel, capacity, zones } from "@/data/stays";
 import { differenceInCalendarDays, format } from "date-fns";
 import { es } from "date-fns/locale";
 import type { DateRange } from "react-day-picker";
@@ -15,10 +15,10 @@ function Label({ a, b }: { a: string; b: string }) {
   );
 }
 
-function Counter({ icon: Icon, label, value, onChange }: { icon: typeof BedDouble; label: string; value: number; onChange: (n: number) => void }) {
+function Counter({ icon: Icon, label, hint, value, onChange }: { icon: typeof BedDouble; label: string; hint: string; value: number; onChange: (n: number) => void }) {
   return (
     <div className="flex items-center justify-between rounded-xl border-2 border-input bg-card px-3 py-2">
-      <span className="flex items-center gap-2 text-sm font-semibold text-foreground"><Icon className="h-5 w-5 text-primary" />{label}</span>
+      <span className="flex items-center gap-2 text-sm font-semibold text-foreground"><Icon className="h-5 w-5 text-primary" /><span>{label}<span className="block text-[11px] font-normal text-muted-foreground">{hint}</span></span></span>
       <span className="flex items-center gap-2">
         <button type="button" aria-label={`Menos ${label}`} onClick={() => onChange(Math.max(0, value - 1))} className="rounded-full bg-secondary p-1 text-secondary-foreground disabled:opacity-40" disabled={value === 0}><Minus className="h-3.5 w-3.5" /></button>
         <span className="w-4 text-center font-bold">{value}</span>
@@ -35,6 +35,7 @@ export function SearchPanel({ zone, onZoneChange: setZone }: { zone: string; onZ
   const nights = range?.from && range?.to ? differenceInCalendarDays(range.to, range.from) : 0;
   const [dbl, setDbl] = useState(1);
   const [sgl, setSgl] = useState(0);
+  const people = capacity(dbl, sgl);
   const field = "w-full rounded-xl border-2 border-input bg-card py-2.5 text-sm text-foreground outline-none focus:border-primary";
 
   return (
@@ -83,11 +84,14 @@ export function SearchPanel({ zone, onZoneChange: setZone }: { zone: string; onZ
       <div>
         <Label a="Cantidad de" b="camas" />
         <div className="grid gap-3 sm:grid-cols-2">
-          <Counter icon={BedDouble} label="Matrimonial" value={dbl} onChange={setDbl} />
-          <Counter icon={BedSingle} label="Individual" value={sgl} onChange={setSgl} />
+          <Counter icon={BedDouble} label="Doble" hint="2 personas" value={dbl} onChange={setDbl} />
+          <Counter icon={BedSingle} label="Simple" hint="1 persona" value={sgl} onChange={setSgl} />
         </div>
+        {people > 0
+          ? <p className="mt-2 text-sm font-semibold text-primary">Hasta {people} {people === 1 ? "persona" : "personas"} · {bedsLabel(dbl, sgl)}</p>
+          : <p className="mt-2 text-sm text-muted-foreground">Elegí al menos una cama</p>}
       </div>
-      <button className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-primary py-3 font-bold text-primary-foreground shadow-elegant transition hover:opacity-95">
+      <button disabled={people === 0} className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-primary py-3 font-bold text-primary-foreground shadow-elegant transition hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-50">
         <Search className="h-5 w-5" /> Buscar hospedaje
       </button>
     </form>

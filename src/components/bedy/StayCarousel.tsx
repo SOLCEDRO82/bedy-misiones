@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { capacity } from "@/data/stays";
 import { BedDouble, BedSingle, Heart, MapPin, Star } from "lucide-react";
 import { formatARS, type Stay } from "@/data/stays";
 
@@ -37,8 +38,9 @@ function StayCard({ stay, onSelect }: { stay: Stay; onSelect: (s: Stay) => void 
           </div>
           <p className="flex items-center gap-1 text-sm text-muted-foreground"><MapPin className="h-3.5 w-3.5" />{stay.zone}</p>
           <p className="flex gap-3 text-xs text-muted-foreground">
-            {stay.doubleBeds > 0 && <span className="flex items-center gap-1"><BedDouble className="h-4 w-4" />{stay.doubleBeds} matrim.</span>}
-            {stay.singleBeds > 0 && <span className="flex items-center gap-1"><BedSingle className="h-4 w-4" />{stay.singleBeds} indiv.</span>}
+            {stay.doubleBeds > 0 && <span className="flex items-center gap-1"><BedDouble className="h-4 w-4" />{stay.doubleBeds} {stay.doubleBeds === 1 ? "doble" : "dobles"}</span>}
+            {stay.singleBeds > 0 && <span className="flex items-center gap-1"><BedSingle className="h-4 w-4" />{stay.singleBeds} {stay.singleBeds === 1 ? "simple" : "simples"}</span>}
+            <span>· hasta {capacity(stay.doubleBeds, stay.singleBeds)} pers.</span>
           </p>
           <p className="pt-1">
             {isOffer && <span className="mr-2 text-sm text-muted-foreground line-through">{formatARS(stay.oldPrice!)}</span>}
