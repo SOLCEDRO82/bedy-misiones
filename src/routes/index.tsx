@@ -6,7 +6,7 @@ import { Logo } from "@/components/bedy/Logo";
 import { SearchPanel } from "@/components/bedy/SearchPanel";
 import { StayCarousel } from "@/components/bedy/StayCarousel";
 import { Attractions } from "@/components/bedy/Attractions";
-import { featured, formatARS, newest, offers, type Stay } from "@/data/stays";
+import { bedsLabel, capacity, featured, formatARS, newest, offers, type Stay } from "@/data/stays";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -95,7 +95,7 @@ function Index() {
             <img src={selected.image} alt={selected.title} className="aspect-video w-full object-cover" />
             <div className="space-y-3 p-5">
               <h3 className="font-display text-xl font-semibold">{selected.title}</h3>
-              <p className="text-sm text-muted-foreground">{selected.zone} · {selected.doubleBeds} matrimonial · {selected.singleBeds} individual</p>
+              <p className="text-sm text-muted-foreground">{selected.zone} · {bedsLabel(selected.doubleBeds, selected.singleBeds).replace(" + ", " · ")} · hasta {capacity(selected.doubleBeds, selected.singleBeds)} personas</p>
               <div className="flex justify-between rounded-xl bg-secondary p-3 text-sm text-secondary-foreground"><span>3 noches × {formatARS(selected.pricePerNight)}</span><b>{formatARS(selected.pricePerNight * 3)}</b></div>
               <button className="w-full rounded-xl bg-gradient-primary py-3 font-bold text-primary-foreground">Iniciá sesión para reservar</button>
               <button onClick={() => setSelected(null)} className="w-full py-2 text-sm text-muted-foreground">Cerrar</button>

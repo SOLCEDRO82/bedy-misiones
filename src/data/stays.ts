@@ -35,5 +35,11 @@ export const offers = base.map((s) => ({
   badge: "-20%",
 }));
 
+/** Personas que entran: cama doble = 2, cama simple = 1. */
+export const capacity = (doubles: number, singles: number) => doubles * 2 + singles;
+
+export const bedsLabel = (d: number, s: number) =>
+  [d > 0 && `${d} ${d === 1 ? "doble" : "dobles"}`, s > 0 && `${s} ${s === 1 ? "simple" : "simples"}`].filter(Boolean).join(" + ");
+
 export const formatARS = (n: number) =>
   new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 0 }).format(n);
