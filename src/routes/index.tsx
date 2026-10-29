@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Bell, CalendarCheck, Heart, Home, Menu, Moon, Sun, User, X } from "lucide-react";
 import hero from "@/assets/hero.jpg";
+import hostBed from "@/assets/host-bed.jpg";
 import { Logo } from "@/components/bedy/Logo";
 import { SearchPanel } from "@/components/bedy/SearchPanel";
 import { StayCarousel } from "@/components/bedy/StayCarousel";
@@ -73,12 +74,22 @@ function Index() {
       <StayCarousel title="Ofertas" subtitle="Precios especiales por tiempo limitado" stays={offers} onSelect={setSelected} />
 
       <section className="mx-auto max-w-6xl px-4 py-6">
-        <div className="rounded-3xl bg-gradient-primary p-6 text-primary-foreground shadow-elegant md:flex md:items-center md:justify-between md:p-10">
-          <div>
-            <h2 className="font-display text-2xl font-semibold md:text-3xl">¿Tenés un hospedaje en Misiones?</h2>
-            <p className="mt-1 opacity-90">Publicalo en bedy y empezá a recibir huéspedes.</p>
+        <div className="relative overflow-hidden rounded-3xl text-primary-foreground shadow-elegant">
+          <img src={hostBed} alt="Cama prolija y luminosa" loading="lazy" width={1600} height={768} className="absolute inset-0 h-full w-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-primary opacity-80" />
+          <div className="relative p-6 md:flex md:items-center md:justify-between md:gap-8 md:p-10">
+            <div className="max-w-xl">
+              <span className="inline-block rounded-full bg-card/20 px-3 py-1 text-sm font-semibold backdrop-blur">
+                💡 ¿Querés convertir tu cama en un ingreso?
+              </span>
+              <h2 className="mt-3 font-display text-2xl font-semibold md:text-3xl">¿Tenés un hospedaje o espacio en Misiones?</h2>
+              <p className="mt-2 opacity-95">
+                No necesitás una casa entera: <strong>solo necesitás una buena cama</strong>.
+              </p>
+              <p className="mt-1 opacity-90">Publicá en bedy y empezá a recibir huéspedes.</p>
+            </div>
+            <button className="mt-5 rounded-xl bg-card px-5 py-3 font-bold text-primary md:mt-0 md:shrink-0">Publicar ahora</button>
           </div>
-          <button className="mt-4 rounded-xl bg-card px-5 py-3 font-bold text-primary md:mt-0">Publicar ahora</button>
         </div>
       </section>
 
