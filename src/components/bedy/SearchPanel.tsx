@@ -23,8 +23,7 @@ function Counter({ icon: Icon, label, value, onChange }: { icon: typeof BedDoubl
   );
 }
 
-export function SearchPanel() {
-  const [zone, setZone] = useState("");
+export function SearchPanel({ zone, onZoneChange: setZone }: { zone: string; onZoneChange: (z: string) => void }) {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [dbl, setDbl] = useState(1);
