@@ -22,7 +22,7 @@ function StayCard({ stay, onSelect }: { stay: Stay; onSelect: (s: Stay) => void 
   const [fav, setFav] = useState(false);
   const isOffer = !!stay.oldPrice;
   return (
-    <article className="w-64 shrink-0 snap-start overflow-hidden rounded-2xl border bg-card shadow-sm sm:w-72">
+    <article className="relative w-64 shrink-0 snap-start overflow-hidden rounded-2xl border bg-card shadow-sm sm:w-72">
       <button onClick={() => onSelect(stay)} className="block w-full text-left">
         <div className="relative">
           <img src={stay.image} alt={stay.title} loading="lazy" width={944} height={704} className="aspect-[4/3] w-full object-cover" />
@@ -50,17 +50,10 @@ function StayCard({ stay, onSelect }: { stay: Stay; onSelect: (s: Stay) => void 
       <button
         aria-label={fav ? "Quitar de favoritos" : "Agregar a favoritos"}
         onClick={() => setFav(!fav)}
-        className="relative -mt-[calc(100%*0.75+0rem)] float-right mr-3 hidden"
-      />
-      <div className="relative">
-        <button
-          aria-label={fav ? "Quitar de favoritos" : "Agregar a favoritos"}
-          onClick={() => setFav(!fav)}
-          className="absolute -top-[13.5rem] right-3 rounded-full bg-card/90 p-2 shadow sm:-top-[15rem]"
-        >
-          <Heart className={`h-4 w-4 ${fav ? "fill-primary text-primary" : "text-foreground"}`} />
-        </button>
-      </div>
+        className="absolute right-3 top-3 rounded-full bg-card/90 p-2 shadow"
+      >
+        <Heart className={`h-4 w-4 ${fav ? "fill-primary text-primary" : "text-foreground"}`} />
+      </button>
     </article>
   );
 }
