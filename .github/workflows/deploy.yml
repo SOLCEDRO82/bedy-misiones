@@ -35,10 +35,10 @@ jobs:
       - name: Build project
         run: bun run build
 
-      - name: Prepare static files for SPA & GitHub Pages
+      - name: Prepare static files for SPA
         run: |
           touch .output/public/.nojekyll
-          cp .output/public/index.html .output/public/404.html
+          if [ -f .output/public/index.html ]; then cp .output/public/index.html .output/public/404.html; fi
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -46,8 +46,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './.output/public'
+          path: '.output/public'
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
