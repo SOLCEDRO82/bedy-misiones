@@ -7,9 +7,15 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
+  // Configuración de Vite interna para GitHub Pages (subruta del repositorio)
+  vite: {
+    base: '/bedy-misiones/',
+  },
   tanstackStart: {
-    // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
-    // nitro/vite builds from this
     server: { entry: "server" },
+  },
+  // Forzamos a Nitro a generar salida estática pura compatible con GitHub Pages
+  nitro: {
+    preset: 'static',
   },
 });
