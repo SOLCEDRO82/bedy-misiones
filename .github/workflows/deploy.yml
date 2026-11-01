@@ -35,30 +35,30 @@ jobs:
       - name: Build project
         run: bun run build
 
-      - name: Prerender static HTML for SPA
+      - name: Prepare static files for GitHub Pages
         run: |
-          # Inicia la app compilada en segundo plano
-          bun run start &
-          SERVER_PID=$!
+          # Verificamos si la salida está en .output/public o en dist
+          if [ -d ".output/public" ]; then
+            TARGET_DIR=".output/public"
+          elif [ -d "dist" ]; then
+            TARGET_DIR="dist"
+          else
+            TARGET_DIR="public"
+          fi
           
-          # Espera a que el servidor esté activo
-          timeout 30 bash -c 'until curl -s http://localhost:3000 > /dev/null; do sleep 1; done'
-          
-          # Descarga el HTML renderizado para la raíz y fallback de rutas
-          curl -s http://localhost:3000/bedy-misiones/ > .output/public/index.html
-          cp .output/public/index.html .output/public/404.html
-          touch .output/public/.nojekyll
-          
-          # Detiene el servidor temporal
-          kill $SERVER_PID || true
-          
+          # Aseguramos el archivo .nojekyll y el fallback 404 para la SPA
+          touch "$TARGET_DIR/.nojekyll"
+          if [ -f "$TARGET_DIR/index.html" ]; then
+            cp "$TARGET_DIR/index.html" "$TARGET_DIR/404.html"
+          fi
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.output/public'
+          path: '.output/public' # o el directorio que use tu estructura
 
       - name: Deploy to GitHub Pages
         id: deployment
