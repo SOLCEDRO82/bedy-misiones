@@ -67,7 +67,7 @@ export function SearchPanel({ zone, onZoneChange: setZone }: { zone: string; onZ
               })}
             </button>
           </PopoverTrigger>
-          <PopoverContent className="w-auto p-0" align="start">
+          <PopoverContent className="w-auto p-0" align="center">
             <Calendar
               mode="range"
               locale={es}
