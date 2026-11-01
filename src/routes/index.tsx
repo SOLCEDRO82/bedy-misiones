@@ -12,10 +12,10 @@ import { bedsLabel, capacity, featured, formatARS, newest, offers, type Stay } f
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "bedy — Hospedajes en Oberá, Misiones" },
-      { name: "description", content: "Buscá y reservá cabañas, departamentos y casas en Oberá eligiendo cuántas camas matrimoniales e individuales necesitás." },
-      { property: "og:title", content: "bedy — Hospedajes en Oberá, Misiones" },
-      { property: "og:description", content: "Reservá tu hospedaje en Oberá eligiendo tus camas." },
+      { title: "bedy — Hospedajes en Misiones" },
+      { name: "description", content: "Buscá y reservá cabañas, departamentos y casas en toda la provincia de Misiones eligiendo cuántas camas matrimoniales e individuales necesitás." },
+      { property: "og:title", content: "bedy — Hospedajes en Misiones" },
+      { property: "og:description", content: "Reservá tu hospedaje en Misiones eligiendo tus camas." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -61,7 +61,7 @@ function Index() {
         <div className="absolute inset-0 bg-gradient-to-b from-overlay/60 via-overlay/30 to-background" />
         <div className="relative mx-auto grid max-w-6xl gap-6 px-4 pb-10 pt-10 md:grid-cols-2 md:items-center md:pt-20">
           <div className="text-on-overlay">
-            <p className="text-sm font-bold uppercase tracking-widest opacity-90">Oberá · Misiones</p>
+            <p className="text-sm font-bold uppercase tracking-widest opacity-90">Misiones · Argentina</p>
             <h1 className="mt-2 font-display text-4xl font-semibold leading-tight md:text-5xl">Dormí como en casa,<br />en el corazón de la tierra colorada.</h1>
             <p className="mt-3 max-w-md opacity-90">Elegí tus camas, no solo la cantidad de personas.</p>
           </div>
@@ -69,7 +69,7 @@ function Index() {
         </div>
       </section>
 
-      <StayCarousel title="Destacados" subtitle="Los favoritos de quienes visitan Oberá" stays={featured} onSelect={setSelected} />
+      <StayCarousel title="Destacados" subtitle="Los favoritos de quienes visitan Misiones" stays={featured} onSelect={setSelected} />
       <StayCarousel title="Nuevos hospedajes" subtitle="Recién llegados a bedy" stays={newest} onSelect={setSelected} />
       <StayCarousel title="Ofertas" subtitle="Precios especiales por tiempo limitado" stays={offers} onSelect={setSelected} />
 
