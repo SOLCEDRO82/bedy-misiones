@@ -7,14 +7,6 @@ import type { DateRange } from "react-day-picker";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
-function Label({ a, b }: { a: string; b: string }) {
-  return (
-    <p className="mb-2 text-sm font-semibold text-foreground">
-      {a} <span className="font-extrabold uppercase text-primary">{b}</span>
-    </p>
-  );
-}
-
 function Counter({ icon: Icon, label, hint, value, onChange }: { icon: typeof BedDouble; label: string; hint: string; value: number; onChange: (n: number) => void }) {
   return (
     <div className="flex items-center justify-between rounded-xl border-2 border-input bg-card px-3 py-2">
@@ -41,7 +33,6 @@ export function SearchPanel({ zone, onZoneChange: setZone }: { zone: string; onZ
   return (
     <form id="buscador" onSubmit={(e) => e.preventDefault()} className="scroll-mt-24 space-y-4 rounded-3xl bg-card/95 p-5 shadow-elegant backdrop-blur">
       <div>
-        <Label a="Indicá el" b="destino" />
         <div className="relative">
           <MapPin className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-primary" />
           <input list="zonas" value={zone} onChange={(e) => setZone(e.target.value)} placeholder="¿A dónde vamos?" className={`${field} pl-10 pr-3`} />
@@ -49,7 +40,6 @@ export function SearchPanel({ zone, onZoneChange: setZone }: { zone: string; onZ
         </div>
       </div>
       <div>
-        <Label a="Seleccioná las" b="fechas" />
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
             <button type="button" className={`${field} grid grid-cols-2 text-left`}>
@@ -82,7 +72,6 @@ export function SearchPanel({ zone, onZoneChange: setZone }: { zone: string; onZ
         {nights > 0 && <p className="mt-2 text-sm font-semibold text-primary">{nights} {nights === 1 ? "noche" : "noches"}</p>}
       </div>
       <div>
-        <Label a="Cantidad de" b="camas" />
         <div className="grid gap-3 sm:grid-cols-2">
           <Counter icon={BedDouble} label="Doble" hint="2 personas" value={dbl} onChange={setDbl} />
           <Counter icon={BedSingle} label="Simple" hint="1 persona" value={sgl} onChange={setSgl} />
