@@ -35,30 +35,18 @@ jobs:
       - name: Build project
         run: bun run build
 
-      - name: Generate static HTML index for GitHub Pages
+      - name: Ensure index.html and SPA routing fallback exist
         run: |
-          JS_FILE=$(basename $(ls .output/public/assets/index-*.js | head -n 1))
-          CSS_FILE=$(basename $(ls .output/public/assets/styles-*.css | head -n 1))
-          
-          cat <<EOF > .output/public/index.html
-          <!DOCTYPE html>
-          <html lang="es">
-          <head>
-            <meta charset="UTF-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <title>Bedy Misiones</title>
-            <link rel="stylesheet" href="/bedy-misiones/assets/$CSS_FILE" />
-          </head>
-          <body>
-            <div id="root"></div>
-            <script type="module" src="/bedy-misiones/assets/$JS_FILE"></script>
-          </body>
-          </html>
-          EOF
-
-          cp .output/public/index.html .output/public/404.html
-          touch .output/public/.nojekyll
-          
+          # Si Nitro generó la salida en .output/public, aseguramos el index y el fallback de rutas
+          if [ -d ".output/public" ]; then
+            cd .output/public
+            if [ ! -f "index.html" ] && [ -f "../../index.html" ]; then
+              cp ../../index.html index.html
+            fi
+            cp index.html 404.html
+            touch .nojekyll
+            cd -
+          fi
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
