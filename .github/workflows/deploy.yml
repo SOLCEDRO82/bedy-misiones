@@ -35,18 +35,13 @@ jobs:
       - name: Build project
         run: bun run build
 
-      - name: Ensure index.html and SPA routing fallback exist
+      - name: Prepare SPA fallback for GitHub Pages
         run: |
-          # Si Nitro generó la salida en .output/public, aseguramos el index y el fallback de rutas
-          if [ -d ".output/public" ]; then
-            cd .output/public
-            if [ ! -f "index.html" ] && [ -f "../../index.html" ]; then
-              cp ../../index.html index.html
-            fi
-            cp index.html 404.html
-            touch .nojekyll
-            cd -
+          if [ -f "dist/index.html" ]; then
+            cp dist/index.html dist/404.html
+            touch dist/.nojekyll
           fi
+          
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
