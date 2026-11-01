@@ -35,11 +35,23 @@ jobs:
       - name: Build project
         run: bun run build
 
-      - name: Prepare static files for SPA
+      - name: Prerender static HTML for SPA
         run: |
+          # Inicia la app compilada en segundo plano
+          bun run start &
+          SERVER_PID=$!
+          
+          # Espera a que el servidor esté activo
+          timeout 30 bash -c 'until curl -s http://localhost:3000 > /dev/null; do sleep 1; done'
+          
+          # Descarga el HTML renderizado para la raíz y fallback de rutas
+          curl -s http://localhost:3000/bedy-misiones/ > .output/public/index.html
+          cp .output/public/index.html .output/public/404.html
           touch .output/public/.nojekyll
-          if [ -f .output/public/index.html ]; then cp .output/public/index.html .output/public/404.html; fi
-
+          
+          # Detiene el servidor temporal
+          kill $SERVER_PID || true
+          
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
