@@ -34,21 +34,24 @@ jobs:
 
       - name: Build project
         run: bun run build
+        env:
+          GITHUB_PAGES: 'true'
 
-      - name: Prepare SPA fallback for GitHub Pages
+      - name: Verify static output
+        run: test -f dist/client/index.html
+
+      - name: Prepare GitHub Pages files
         run: |
-          if [ -f "dist/index.html" ]; then
-            cp dist/index.html dist/404.html
-            touch dist/.nojekyll
-          fi
-          
+          cp dist/client/index.html dist/client/404.html
+          touch dist/client/.nojekyll
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'dist' # o el directorio que use tu estructura
+          path: dist/client
 
       - name: Deploy to GitHub Pages
         id: deployment
