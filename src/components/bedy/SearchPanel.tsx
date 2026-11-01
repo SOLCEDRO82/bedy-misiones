@@ -12,7 +12,7 @@ function Counter({ icon: Icon, label, hint, value, onChange }: { icon: typeof Be
     <div className="flex items-center justify-between rounded-xl border-2 border-input bg-card px-3 py-2">
       <span className="flex items-center gap-2 text-sm font-semibold text-foreground"><Icon className="h-5 w-5 text-primary" /><span>{label}<span className="block text-[11px] font-normal text-muted-foreground">{hint}</span></span></span>
       <span className="flex items-center gap-2">
-        <button type="button" aria-label={`Menos ${label}`} onClick={() => onChange(Math.max(0, value - 1))} className="rounded-full bg-accent p-1 text-accent-foreground ring-1 ring-primary/30 disabled:bg-secondary disabled:text-secondary-foreground disabled:ring-0 disabled:opacity-40" disabled={value === 0}><Minus className="h-3.5 w-3.5" /></button>
+        <button type="button" aria-label={`Menos ${label}`} onClick={() => onChange(Math.max(0, value - 1))} className="rounded-full bg-primary/35 p-1 text-accent-foreground ring-1 ring-primary/60 dark:bg-primary/55 dark:text-primary-foreground dark:ring-primary disabled:bg-secondary disabled:text-secondary-foreground disabled:ring-0 disabled:opacity-40" disabled={value === 0}><Minus className="h-3.5 w-3.5" /></button>
         <span className="w-4 text-center font-bold">{value}</span>
         <button type="button" aria-label={`Más ${label}`} onClick={() => onChange(Math.min(9, value + 1))} className="rounded-full bg-primary p-1 text-primary-foreground"><Plus className="h-3.5 w-3.5" /></button>
       </span>
