@@ -17,7 +17,7 @@ export function Attractions({ onPick }: { onPick: (zone: string) => void }) {
   return (
     <section className="py-6">
       <div className="mx-auto max-w-6xl px-4">
-        <h2 className="font-display text-2xl font-semibold text-foreground">¿Qué te trae por Oberá?</h2>
+        <h2 className="font-display text-2xl font-semibold text-foreground">¿Qué te trae por Misiones?</h2>
         <p className="text-sm text-muted-foreground">Elegí tu plan y encontrá dónde descansar cerca.</p>
       </div>
       <div className="no-scrollbar mx-auto mt-4 flex max-w-6xl snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 lg:grid lg:grid-cols-5 lg:overflow-visible">
